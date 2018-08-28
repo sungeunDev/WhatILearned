@@ -64,7 +64,6 @@
         <!--Navigation Controller-->
         <scene sceneID="ejD-qZ-ZLx">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="5rt-x8-qmH" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="lRL-II-Y5U" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="40T-hv-zgc">
@@ -73,25 +72,26 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="7kW-Em-1Gl" kind="show" id="ydI-xF-mMD"/>
+                        <segue destination="G5F-uC-eUG" kind="relationship" relationship="rootViewController" id="tAl-RV-Ir1"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5rt-x8-qmH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="117.59999999999999" y="776.76161919040487"/>
         </scene>
-        <!--ColorBall-->
-        <scene sceneID="0nJ-6F-oo2">
+        <!--Colorful Ball View Controller-->
+        <scene sceneID="33B-JE-Gig">
             <objects>
-                <viewController title="ColorBall" id="7kW-Em-1Gl" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="CBh-id-rS7">
+                <viewController id="G5F-uC-eUG" customClass="ColorfulBallViewController" customModule="RxSwiftStudy" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="EuW-7G-Nlx">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <viewLayoutGuide key="safeArea" id="2vO-Qo-IIC"/>
+                        <viewLayoutGuide key="safeArea" id="R7v-Wp-vbF"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Title" id="E5f-B1-yk7"/>
+                    <navigationItem key="navigationItem" id="sDN-Ip-gZF"/>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="VFe-VT-Bku" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cPA-Qh-kpK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1057" y="777"/>
         </scene>
