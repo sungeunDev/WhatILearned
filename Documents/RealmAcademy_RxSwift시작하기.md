@@ -15,7 +15,7 @@
 1. Functional Programming
     - 절차적 방법
 >
-``` 
+``` swift
 var sum = 0
 for i in 1...0 {
     sum += 1
@@ -25,11 +25,11 @@ print(sum)
 - 결과값을 만드는 sum 변수를 만들어서 sum 변화시키며 값을 저장.
 
     + 함수적 방법
-    >
-    ```
+>
+``` swift
 print((1...10).reduce(0) { $0 + $1 }
-    ```
-    - 상태가 저장되지 않기 대문에 변화되는 값도 없음.
+```
+- 상태가 저장되지 않기 대문에 변화되는 값도 없음.
 
 2. Data flow
     - 함수를 연결해가며 데이터를 함수에 흘려보낼 수 있음.
@@ -50,7 +50,8 @@ print((1...10).reduce(0) { $0 + $1 }
 - An API for asynchrouous programming with **observable** streams.
 - observable: 다수의 이벤트를 비동기적으로 다루는 방법. 옵저버 패턴의 확장.
 
->| 구분 | 단일 | 다수 |
+>
+| 구분 | 단일 | 다수 |
 |:--------:|:--------:|:--------:|
 | 동기 | `Try<T>` | `Iterable<T>` |
 | 비동기 | `Future<T>` | `Observable<T>` |
@@ -63,7 +64,8 @@ print((1...10).reduce(0) { $0 + $1 }
         + OnError
         + OnCompleted
 
->| 구분 | Iterable(pull) | Observable(push) |
+>
+| 구분 | Iterable(pull) | Observable(push) |
 |:--------:|:--------:|:--------:|
 | 데이터 받기 | T next() | onNext(T) |
 | 에러 발견 | throws Exception | onError(Exception) |
