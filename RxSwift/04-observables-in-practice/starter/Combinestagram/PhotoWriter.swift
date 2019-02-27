@@ -30,8 +30,8 @@ class PhotoWriter {
     case couldNotSavePhoto
   }
 
-  static func save(_ image: UIImage) -> Observable<String> {
-    return Observable.create({ observer in
+  static func save(_ image: UIImage) -> Single<String> {
+    return Single.create(subscribe: { observer in
       
       var savedAssetId: String?
       
@@ -44,10 +44,12 @@ class PhotoWriter {
           // handler
           if success, let id = savedAssetId {
             // observer로 emit
-            observer.onNext(id)
-            observer.onCompleted()
+            observer(.success(id))
+//            observer.onNext(id)
+//            observer.onCompleted()
           } else {
-            observer.onError(error ?? Errors.couldNotSavePhoto)
+            observer(.error(error ?? Errors.couldNotSavePhoto))
+//            observer.onError(error ?? Errors.couldNotSavePhoto)
           }
         }
       })

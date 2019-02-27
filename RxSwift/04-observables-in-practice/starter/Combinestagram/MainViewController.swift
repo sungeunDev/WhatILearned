@@ -65,7 +65,6 @@ class MainViewController: UIViewController {
     guard let image = imagePreview.image else { return }
     
     PhotoWriter.save(image)
-      .asSingle()
       .subscribe(onSuccess: { [weak self] id in
         self?.showMessage("Saved with id: \(id)")
         self?.actionClear()
@@ -91,8 +90,32 @@ class MainViewController: UIViewController {
   }
 
   func showMessage(_ title: String, description: String? = nil) {
-    let alert = UIAlertController(title: title, message: description, preferredStyle: .alert)
-    alert.addAction(UIAlertAction(title: "Close", style: .default, handler: { [weak self] _ in self?.dismiss(animated: true, completion: nil)}))
-    present(alert, animated: true, completion: nil)
+    alert(title: title, msg: description)
+      .subscribe()
+      .disposed(by: bag)
+//    let alert = UIAlertController(title: title, message: description, preferredStyle: .alert)
+//    alert.addAction(UIAlertAction(title: "Close", style: .default, handler: { [weak self] _ in self?.dismiss(animated: true, completion: nil)}))
+//    present(alert, animated: true, completion: nil)
+  }
+}
+
+
+//MARK: - UIViewController Extension
+extension UIViewController {
+  func alert(title: String, msg: String?) -> Completable {
+    // completable은 아무런 값도 방출하지 않는다.
+    return Completable.create(subscribe: { [weak self] completable in
+      let alertVC = UIAlertController(title: title, message: msg, preferredStyle: .alert)
+      let closeAction = UIAlertAction(title: "Close", style: .default, handler: { (_) in
+        // 아무런 값도 방출하지는 않지만, close Action을 클릭했다는 건 알려주기 때문에
+        // 즉, 어떤 action의 성공여부를 확인할 때 쓰면 편하다. (=동기식 연산의 성공여부를 확인할 때)
+        completable(.completed)
+      })
+      alertVC.addAction(closeAction)
+      self?.present(alertVC, animated: true, completion: nil)
+      return Disposables.create {
+        self?.dismiss(animated: true, completion: nil)
+      }
+    })
   }
 }
