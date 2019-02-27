@@ -87,7 +87,7 @@ example("zip") {
     let intSubject = PublishSubject<Int>()
     
     Observable.zip(stringSubject, intSubject) { stringElement, intElement in
-        "\(stringElement) \(intElement)"
+        "\(stringElement) - \(intElement)"
         }
         .subscribe(onNext: { print($0) })
         .disposed(by: disposeBag)
@@ -115,7 +115,7 @@ example("combineLatest") {
     let intSubject = PublishSubject<Int>()
     
     Observable.combineLatest(stringSubject, intSubject) { stringElement, intElement in
-            "\(stringElement) \(intElement)"
+            "\(stringElement) - \(intElement)"
         }
         .subscribe(onNext: { print($0) })
         .disposed(by: disposeBag)
@@ -135,10 +135,10 @@ example("Array.combineLatest") {
     
     let stringObservable = Observable.just("❤️")
     let fruitObservable = Observable.from(["🍎", "🍐", "🍊"])
-    let animalObservable = Observable.of("🐶", "🐱", "🐭", "🐹")
+    let animalObservable = Observable.of("🐶", "🐱", "🐭", "🐹", "🎃")
     
     Observable.combineLatest([stringObservable, fruitObservable, animalObservable]) {
-            "\($0[0]) \($0[1]) \($0[2])"
+            "\($0[0]) - \($0[1]) - \($0[2]), \($0)"
         }
         .subscribe(onNext: { print($0) })
         .disposed(by: disposeBag)
