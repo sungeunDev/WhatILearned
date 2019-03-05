@@ -35,6 +35,9 @@ class CitySearcherViewController: UIViewController {
         self.tableView.reloadData()
       })
       .disposed(by: disposeBag)
+    
+    
+    
   }
 }
 

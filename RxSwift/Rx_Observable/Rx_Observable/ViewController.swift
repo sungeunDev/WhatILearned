@@ -9,43 +9,47 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import Alamofire
+import RxAlamofire
 
 class ViewController: UIViewController {
 
     @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var tableView: UITableView!
     
     var bag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-    
-        let searchText = searchBar
-            .rx.text
-            .map { "\($0!)A" }
-            .subscribe(onNext: { print($0!) })
+        searchBar
+            .rx.text.asObservable()
+            .flatMap({ (query) -> Observable<[String:String]> in
+                return self.getRequestObservable(query: query!)
+            })
+            .bind(to: tableView.rx.items(cellIdentifier: "Cell")) { index, model, cell in
+                cell.textLabel?.text = model.value
+            }
             .disposed(by: bag)
-        
-        
-        getRequestObservable(query: "test")
-            .subscribe(onNext: { print($0) })
-            .disposed(by: bag)
-        
     }
     
-    func getRequestObservable(query: String) -> Observable<String> {
-        return Observable<String>.create { (observer) -> Disposable in
+    func getRequestObservable(query: String) -> Observable<[String:String]> {
+        return Observable<[String:String]>.create { (observer) -> Disposable in
             let url = URL(string: "https://api.github.com/search/users?q=\(query)")!
             let task = URLSession.shared.dataTask(with: url) { data, response, err in
                 guard let data = data else { return }
-                guard let json = String(data: data, encoding: .utf8) else {
-                    observer.onError(err!)
-                    return
+                let json = try! JSONSerialization.jsonObject(with: data, options: []) as? [String:Any]
+                print("url: \(url)")
+                if let items = json?["items"] as? [String:String] {
+                    observer.onNext(items)
+                } else {
+                    observer.onNext(["zero":"nothing"])
                 }
-                observer.onNext(json)
             }
             task.resume()
-            return Disposables.create()
+            return Disposables.create {
+                task.cancel()
+            }
         }
     }
     

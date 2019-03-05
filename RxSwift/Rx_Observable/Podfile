@@ -8,5 +8,5 @@ target 'Rx_Observable' do
   # Pods for Rx_Observable
   pod 'RxSwift'
   pod 'RxCocoa'
-
+  pod 'RxAlamofire'
 end
