@@ -13,10 +13,21 @@ import RxSwift
  */
 playgroundShouldContinueIndefinitely()
 
-example("Try yourself") {
-  // let disposeBag = DisposeBag()
-  _ = Observable.just("Hello, RxSwift!")
-    .debug("Observable")
-    .subscribe()
-    // .disposed(by: disposeBag) // If dispose bag is used instead, sequence will terminate on scope exit
+example("Ignore operators") {
+    let strikes = PublishSubject<String>()
+    let disposeBag = DisposeBag()
+    
+    strikes
+//        .ignoreElements()
+        .elementAt(2)
+        .subscribe(onNext: { _ in
+            print("You're out!")
+        })
+        .disposed(by: disposeBag)
+    
+    strikes.onNext("X")
+    strikes.onNext("X")
+    strikes.onNext("X")
+
+//    strikes.onCompleted()
 }
